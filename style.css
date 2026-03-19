@@ -1,0 +1,34 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #e2f2fe;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 40px;
+}
+
+#image_container {
+    margin: 60px auto;
+    width: 420px;
+    height: fit-content;
+    padding: 10px;
+    background-color: #97cffd;
+}
+
+img {
+    display: inline;
+    height: 130px;
+    width: 130px;
+    border: 1px solid black;
+}
+
+.hidden {
+    display: none;
+}

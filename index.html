@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيد الفطر 1447</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>لعبة ترتيب الصور 
+        <br>
+        (نسخة عيد الفطر)</h1>
+    
+    <div id="image_container">
+        <img src="1.jpg" alt="" class="first firstImg" draggable="true">
+        <img src="2.jpg" alt="" class="second firstImg" draggable="true">
+        <img src="3.jpg" alt="" class="third firstImg" draggable="true">
+        <img src="4.jpg" alt="" class="fourth firstImg" draggable="true">
+        <img src="5.jpg" alt="" class="fivth firstImg" draggable="true">
+        <img src="6.jpg" alt="" class="sixth firstImg" draggable="true">
+        <img src="7.jpg" alt="" class="seventh firstImg" draggable="true">
+        <img src="8.jpg" alt="" class="eighth firstImg" draggable="true">
+        <img src="9.jpg" alt="" class="ninth firstImg" draggable="true">
+
+        <img src="11.png" alt="" class="first secondImg" draggable="true">
+        <img src="22.png" alt="" class="second secondImg" draggable="true">
+        <img src="33.png" alt="" class="third secondImg" draggable="true">
+        <img src="44.png" alt="" class="fourth secondImg" draggable="true">
+        <img src="55.png" alt="" class="fivth secondImg" draggable="true">
+        <img src="66.png" alt="" class="sixth secondImg" draggable="true">
+        <img src="77.png" alt="" class="seventh secondImg" draggable="true">
+        <img src="88.png" alt="" class="eighth secondImg" draggable="true">
+        <img src="99.png" alt="" class="ninth secondImg" draggable="true">
+
+        <img src="111.png" alt="" class="first thirdImg" draggable="true">
+        <img src="222.png" alt="" class="second thirdImg" draggable="true">
+        <img src="333.png" alt="" class="third thirdImg" draggable="true">
+        <img src="444.png" alt="" class="fourth thirdImg" draggable="true">
+        <img src="555.png" alt="" class="fivth thirdImg" draggable="true">
+        <img src="666.png" alt="" class="sixth thirdImg" draggable="true">
+        <img src="777.png" alt="" class="seventh thirdImg" draggable="true">
+        <img src="888.png" alt="" class="eighth thirdImg" draggable="true">
+        <img src="999.png" alt="" class="ninth thirdImg" draggable="true">
+    </div>
+
+
+    <script> 
+
+        let currTile;
+        let otherTile;
+
+        const puzzleClasses = ["firstImg", "secondImg", "thirdImg"];
+        const randomIndex = Math.floor(Math.random() * 3);
+        const chosenClass = puzzleClasses[randomIndex];
+
+        function showRandomPuzzle() {
+            puzzleClasses.forEach(function(cls) {
+                let imgs = document.getElementsByClassName(cls);
+                for (let i = 0; i < imgs.length; i++) {
+                    if (cls === chosenClass) {
+                        imgs[i].classList.remove("hidden");
+                    } else {
+                        imgs[i].classList.add("hidden");
+                    }
+                }
+            });
+        }
+
+        function addEvent(img) {
+            img.addEventListener("dragstart", dragStart);
+            img.addEventListener("dragover", dragOver);
+            img.addEventListener("dragenter", dragEnter);
+            img.addEventListener("dragleave", dragLeave);
+            img.addEventListener("drop", dragDrop);
+            img.addEventListener("dragend", dragEnd);
+        }
+
+        function dragStart() {
+            currTile = this;
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function dragEnter(e) {
+            e.preventDefault();
+        }
+
+        function dragLeave() {}
+
+        function dragDrop() {
+            otherTile = this;
+        }
+        
+        function dragEnd() {
+            let leftDiff = Math.round(Math.abs(currTile.getBoundingClientRect().left - otherTile.getBoundingClientRect().left));
+            let topDiff = Math.round(Math.abs(currTile.getBoundingClientRect().top - otherTile.getBoundingClientRect().top));
+            let tileWidth = Math.round(currTile.getBoundingClientRect().width);
+            let tileHeight = Math.round(currTile.getBoundingClientRect().height);
+
+            let isHorizontalNeighbor = Math.abs(leftDiff - tileWidth) < 10 && topDiff < 10;
+            let isVerticalNeighbor = Math.abs(topDiff - tileHeight) < 10 && leftDiff < 10;
+
+            if (isHorizontalNeighbor || isVerticalNeighbor) {
+                let currImg = currTile.src;
+                let otherImg = otherTile.src;
+                currTile.src = otherImg;
+                otherTile.src = currImg;
+            }
+        }
+
+        window.onload = function () {
+            showRandomPuzzle();
+
+            let activeImgs = document.getElementsByClassName(chosenClass);
+            for (let i = 0; i < activeImgs.length; i++) {
+                addEvent(activeImgs[i]);
+            }
+        }
+
+    </script>
+
+</body>
+</html>
