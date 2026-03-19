@@ -68,12 +68,12 @@
         }
 
         function addEvent(img) {
-            img.addEventListener("dragstart", dragStart);
-            img.addEventListener("dragover", dragOver);
-            img.addEventListener("dragenter", dragEnter);
-            img.addEventListener("dragleave", dragLeave);
-            img.addEventListener("drop", dragDrop);
-            img.addEventListener("dragend", dragEnd);
+            img.addEventListener("touchstart", dragStart);
+            img.addEventListener("touchmove", dragOver);
+            // img.addEventListener("touchenter", dragEnter);
+            img.addEventListener("touchcancel", dragLeave);
+            // img.addEventListener("touch", dragDrop);
+            img.addEventListener("touchend", dragEnd);
         }
 
         function dragStart() {
@@ -94,7 +94,13 @@
             otherTile = this;
         }
         
-        function dragEnd() {
+        function dragEnd(e) {
+
+            // console.log(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+            currTile.style.visibility = "hidden";
+            otherTile = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+            currTile.style.visibility = "visible";
+
             let leftDiff = Math.round(Math.abs(currTile.getBoundingClientRect().left - otherTile.getBoundingClientRect().left));
             let topDiff = Math.round(Math.abs(currTile.getBoundingClientRect().top - otherTile.getBoundingClientRect().top));
             let tileWidth = Math.round(currTile.getBoundingClientRect().width);
